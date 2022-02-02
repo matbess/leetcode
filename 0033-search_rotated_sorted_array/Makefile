@@ -1,4 +1,4 @@
-INCLUDE_DIRS="../../catch2"
+INCLUDE_DIRS="../catch2"
 SRC_FILES:= $(wildcard *.cpp)
 CXX=g++
 CXXFLAGS=-I$(INCLUDE_DIRS) -std=c++17 -Wall -Werror

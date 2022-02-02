@@ -1,7 +1,7 @@
 #define CATCH_CONFIG_MAIN
 #include <vector>
 #include "catch.hpp"
-#include "solution.h"
+#include "Solution.h"
 
 using namespace std;
 using namespace leetcode;
