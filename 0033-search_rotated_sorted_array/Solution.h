@@ -43,6 +43,7 @@ Constraints:
 class Solution
 {
 public:
+    // runtime complexity is O(log n)
     int search(const std::vector<int>& nums, int target);
 
 protected:

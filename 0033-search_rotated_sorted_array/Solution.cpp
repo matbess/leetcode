@@ -15,12 +15,15 @@ int Solution::search(const vector<int>& nums, int target)
     int pivot = findPivot(nums);
     if (pivot != -1)
     {
+        // If target < nums[0] then it will be at or after
+        // the pivot point else it will be before the pivot
         if (target < nums[0])
             start = pivot;
         else
             end = pivot - 1;
     }
 
+    // Use binary search to achieve O(log n)
     while (start <= end)
     {
         int middle = (start + end) / 2;
@@ -43,11 +46,13 @@ int Solution::findPivot(const std::vector<int>& nums)
     int end = nums.size() - 1;
     int pivot = -1;
 
+    // Use binary search to achieve O(log n)
     while (start < end)
     {
         int middle = (start + end) / 2;
         if (middle < nums.size()-1 && nums[middle] > nums[middle+1])
         {
+            // when nums[i] > nums[i+1] we have found the pivot point
             pivot = middle + 1;
             break;
         }
