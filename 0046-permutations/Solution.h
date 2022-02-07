@@ -30,7 +30,7 @@ public:
       -10 <= nums[i] <= 10
       All the integers of nums are unique.
     */
-    std::vector<std::vector<int>> permute(std::vector<int>& nums);
+    std::vector<std::vector<int>> permute(const std::vector<int>& nums);
 };
 
 } // leetcode

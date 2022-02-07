@@ -6,22 +6,23 @@
 using namespace std;
 using namespace leetcode;
 
-void VerifyResults(const vector<vector<int>>& results, vector<vector<int>>& expected)
+void VerifyResults(const vector<vector<int>>& results, const vector<vector<int>>& expected)
 {
     REQUIRE(results.size() > 0);
     REQUIRE(results.size() == expected.size());
 
     auto nums = expected[0].size();
+    auto expectedCopy = expected;
 
     for (auto permutation : results)
     {
-        REQUIRE(expected.size() != 0);
+        REQUIRE(expectedCopy.size() != 0);
         REQUIRE(permutation.size() == nums);
-        auto it = find(expected.begin(), expected.end(), permutation);
-        REQUIRE(it != expected.end());
-        auto s = expected.size();
-        expected.erase(it);
-        REQUIRE(expected.size() == s - 1);
+        auto it = find(expectedCopy.begin(), expectedCopy.end(), permutation);
+        REQUIRE(it != expectedCopy.end());
+        auto s = expectedCopy.size();
+        expectedCopy.erase(it);
+        REQUIRE(expectedCopy.size() == s - 1);
     }
 }
 
@@ -48,30 +49,22 @@ TEST_CASE("Permutations of different input sizes", "[permute]")
 
     SECTION("A single number")
     {
-        vector<int> nums = { 0 };
-        auto results = solution.permute(nums);
-        vector<vector<int>> expected = { {0} };
-        //PrintResults(results);
-        VerifyResults(results, expected);
+        VerifyResults(solution.permute({0}), {{0}});
     }
-
 
     SECTION("Two numbers")
     {
-        vector<int> nums = { 0, 1 };
-        auto results = solution.permute(nums);
-        vector<vector<int>> expected = { {0,1}, {1,0} };
-        //PrintResults(results);
-        VerifyResults(results, expected);
+        VerifyResults(solution.permute({0,1}), {{0,1},{1,0}});
+        VerifyResults(solution.permute({5,2}), {{5,2},{2,5}});
     }
 
-    SECTION("Three sequential numbers")
+    SECTION("Three numbers")
     {
-        vector<int> nums = { 0, 1, 2 };
-        auto results = solution.permute(nums);
-        vector<vector<int>> expected = { {0,1,2}, {0,2,1}, {1,0,2}, {1,2,0}, {2,0,1}, {2,1,0} };
-        //PrintResults(results);
-        VerifyResults(results, expected);
+        VerifyResults(solution.permute({0,1,2}),
+            {{0,1,2}, {0,2,1}, {1,0,2}, {1,2,0}, {2,0,1}, {2,1,0}});
+
+        VerifyResults(solution.permute({0,8,3}),
+            {{0,8,3}, {0,3,8}, {8,0,3}, {8,3,0}, {3,0,8}, {3,8,0}});
     }
 
     SECTION("Five non-sequential numbers with edge cases")

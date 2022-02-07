@@ -4,7 +4,7 @@ namespace leetcode
 {
 using namespace std;
 
-vector<vector<int>> Solution::permute(vector<int>& nums)
+vector<vector<int>> Solution::permute(const vector<int>& nums)
 {
     if (nums.size() == 1)
     {
