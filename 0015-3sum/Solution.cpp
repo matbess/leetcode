@@ -15,8 +15,6 @@ std::vector<std::vector<int>> Solution::threeSum(const std::vector<int>& nums)
     auto values = nums;
     sort(values.begin(), values.end());
 
-    set<pair<int,int>> completedPairs;
-
     for (int i=0; i < values.size(); ++i)
     {
         if (i > 0 && values[i] == values[i-1])
@@ -24,20 +22,20 @@ std::vector<std::vector<int>> Solution::threeSum(const std::vector<int>& nums)
 
         for (int j=i+1; j < values.size(); ++j)
         {
-            auto pair = make_pair(values[i], values[j]);
-            if (completedPairs.find(pair) != completedPairs.end())
-                continue; // we've already evaluated this pair
+            // Skip duplicates except for when i was just incremented (j-1 == i)
+            if (j-1 > i && j > 0 && values[j] == values[j-1])
+                continue;
 
             int need = 0 - values[i] - values[j];
             for (int k=j+1; k < values.size(); ++k)
             {
-                if (values[k] == need)
+                if (values[k] >= need)
                 {
-                    results.push_back({values[i],values[j],values[k]});
+                    if (values[k] == need)
+                        results.push_back({values[i],values[j],values[k]});
                     break;
                 }
             }
-            completedPairs.insert(pair);
         }
     }
 
