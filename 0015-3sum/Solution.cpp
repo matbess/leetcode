@@ -1,5 +1,4 @@
 #include "Solution.h"
-#include <set>
 
 namespace leetcode
 {
@@ -27,14 +26,27 @@ std::vector<std::vector<int>> Solution::threeSum(const std::vector<int>& nums)
                 continue;
 
             int need = 0 - values[i] - values[j];
-            for (int k=j+1; k < values.size(); ++k)
+            // Using O(log n) binary search for this nested loop
+            // gives a big runtime performance improvement over
+            // simply iterating O(n) over the entire values array.
+            int start = j+1;
+            int end = values.size() - 1;
+            while (start <= end)
             {
-                if (values[k] >= need)
+                int middle = (start + end) / 2;
+                // If the value at nums[middle] is >= target then search
+                // earlier in the array else search later in the array
+                if (values[middle] >= need)
                 {
-                    if (values[k] == need)
-                        results.push_back({values[i],values[j],values[k]});
-                    break;
+                    if (values[middle] == need)
+                    {
+                        results.push_back({values[i],values[j],values[middle]});
+                        break;
+                    }
+                    end = middle - 1;
                 }
+                else
+                    start = middle + 1;
             }
         }
     }
